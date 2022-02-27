@@ -43,6 +43,31 @@ function firstnameValidation(firstname) {
 }
 
 /** ------------------------------------------------------------
+ * Lastname validation function
+ * @param {Element} lastname 
+ * @returns true or false
+ */
+function lastnameValidation(lastname) {
+    const lastnameForm = lastname.parentElement;
+    const nameRegex = /^[a-zA-z-éè]{2,15}$/;
+
+    if (!nameRegex.test(lastname.value) || lastname.value.length < 2 || lastname.value === "") {
+        if (lastname.value === "") {
+            lastnameForm.dataset.error = "Veuillez remplir le champ";
+        }else if (lastname.value.length < 2) {
+            lastnameForm.dataset.error = "Veuillez saisir au moins deux lettres";
+        }else if (!nameRegex.test(lastname.value)) {
+            lastnameForm.dataset.error = "Veuillez n'utiliser que des lettres";
+        }
+        lastnameForm.dataset.errorVisible = "true";
+        return false;
+    }else {
+        lastnameForm.dataset.errorVisible = "false";
+        return true;
+    }
+}
+
+/** ------------------------------------------------------------
  * Validate form function
  * @param {Object} e 
  * @returns true or false
@@ -53,6 +78,7 @@ function firstnameValidation(firstname) {
     //-- Verification array (true or false) for each input value
     let verification = [
         firstnameValidation(firstname),
+        lastnameValidation(lastname),
     ];
 
     //-- If every data are correct
