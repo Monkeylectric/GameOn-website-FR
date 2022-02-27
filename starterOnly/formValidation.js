@@ -17,6 +17,32 @@ let cityChecked = "";
 form.addEventListener("submit", validateForm);
 
 /** ------------------------------------------------------------
+ * Firstname validation function
+ * @param {Element} firstname 
+ * @returns true or false
+ */
+function firstnameValidation(firstname) {
+    const firstnameForm = firstname.parentElement;
+    const nameRegex = /^[a-zA-z-éè]{2,15}$/;
+
+    if (!nameRegex.test(firstname.value) || firstname.value.length < 2 || firstname.value === "") {
+        if (firstname.value === "") {
+            firstnameForm.dataset.error = "Veuillez remplir le champ";
+        }else if (firstname.value.length < 2) {
+            firstnameForm.dataset.error = "Veuillez saisir au moins deux lettres";
+        }
+        else if (!nameRegex.test(firstname.value)) {
+            firstnameForm.dataset.error = "Veuillez n'utiliser que des lettres";
+        }
+        firstnameForm.dataset.errorVisible = "true";
+        return false;
+    }else {
+        firstnameForm.dataset.errorVisible = "false";
+        return true;
+    }
+}
+
+/** ------------------------------------------------------------
  * Validate form function
  * @param {Object} e 
  * @returns true or false
@@ -25,7 +51,9 @@ form.addEventListener("submit", validateForm);
     e.preventDefault();
     
     //-- Verification array (true or false) for each input value
-    let verification = [];
+    let verification = [
+        firstnameValidation(firstname),
+    ];
 
     //-- If every data are correct
     if(verification.every(Boolean)) {
