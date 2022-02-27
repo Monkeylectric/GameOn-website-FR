@@ -138,6 +138,27 @@ function quantityValidation(quantity) {
 }
 
 /** ------------------------------------------------------------
+ * City validation function
+ * @param {NodeElements} cityForm 
+ * @returns true or false
+ */
+function locationValidation(cityForm) {
+    cityForm.forEach(city => {
+        if(city.checked){
+            cityChecked = city.value;
+            city.parentElement.dataset.errorVisible = "false";
+        }else {
+            city.parentElement.dataset.error = "Veuillez selectionné une ville";
+            city.parentElement.dataset.errorVisible = "true";
+        }
+    });
+
+    if (cityChecked != "") {
+        return true;
+    }
+}
+
+/** ------------------------------------------------------------
  * Validate form function
  * @param {Object} e 
  * @returns true or false
@@ -152,6 +173,7 @@ function quantityValidation(quantity) {
         mailValidation(email),
         birthdateValidation(birthdate),
         quantityValidation(quantity),
+        locationValidation(cityForm),
     ];
 
     //-- If every data are correct
@@ -162,7 +184,8 @@ function quantityValidation(quantity) {
             lastname: lastname.value,
             email: email.value,
             birthdate: birthdate.value,
-            quantity: parseInt(quantity.value)
+            quantity: parseInt(quantity.value),
+            location: cityChecked,
         };
 
         console.log("%c----- [Object to send] -----", "color: #65b44b");
