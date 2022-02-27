@@ -115,6 +115,29 @@ function birthdateValidation(birthdate) {
 }
 
 /** ------------------------------------------------------------
+ * Quantity validation function
+ * @param {Element} quantity 
+ * @returns true or false
+ */
+function quantityValidation(quantity) {
+    const quantityForm = quantity.parentElement;
+    const quantityRegex = /^[0-9][0-9]?$/;
+
+    if (!quantityRegex.test(quantity.value) || quantity.value === "") {
+        if (quantity.value === "") {
+            quantityForm.dataset.error = "Veuillez remplir le champ";
+        }else if (!quantityRegex.test(quantity.value)) {
+            quantityForm.dataset.error = "Le nombre doit être compris entre 0 et 99";
+        }
+        quantityForm.dataset.errorVisible = "true";
+        return false;
+    }else {
+        quantityForm.dataset.errorVisible = "false";
+        return true;
+    }
+}
+
+/** ------------------------------------------------------------
  * Validate form function
  * @param {Object} e 
  * @returns true or false
@@ -128,6 +151,7 @@ function birthdateValidation(birthdate) {
         lastnameValidation(lastname),
         mailValidation(email),
         birthdateValidation(birthdate),
+        quantityValidation(quantity),
     ];
 
     //-- If every data are correct
