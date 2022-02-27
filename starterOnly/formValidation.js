@@ -91,6 +91,30 @@ function mailValidation(email) {
 }
 
 /** ------------------------------------------------------------
+ * Birthdate validation function
+ * @param {Element} birthdate 
+ * @returns true or false
+ */
+function birthdateValidation(birthdate) {
+    const birthdateForm = birthdate.parentElement;
+    const birthdayRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+
+    if (!birthdayRegex.test(birthdate.value) || birthdate.value === "") {
+        if (birthdate.value === "") {
+            birthdateForm.dataset.error = "Veuillez remplir le champ";
+        }else if (!birthdayRegex.test(birthdate.value)) {
+            birthdateForm.dataset.error = "Veuillez rentrer une date valide";
+        }
+        birthdateForm.dataset.errorVisible = "true";
+
+        return false;
+    }else {
+        birthdateForm.dataset.errorVisible = "false";
+        return true;
+    }
+}
+
+/** ------------------------------------------------------------
  * Validate form function
  * @param {Object} e 
  * @returns true or false
@@ -103,6 +127,7 @@ function mailValidation(email) {
         firstnameValidation(firstname),
         lastnameValidation(lastname),
         mailValidation(email),
+        birthdateValidation(birthdate),
     ];
 
     //-- If every data are correct
