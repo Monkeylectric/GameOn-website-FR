@@ -159,6 +159,21 @@ function locationValidation(cityForm) {
 }
 
 /** ------------------------------------------------------------
+ * Checkbox validation function
+ * @param {Element} checkbox 
+ * @returns true or false
+ */
+function checkboxValidation(checkbox) {
+    if (checkbox.checked) {
+        checkbox.parentElement.dataset.errorVisible = "false";
+        return true;
+    }
+        checkbox.parentElement.dataset.error = "Veuillez accepter les conditions d'utilisation";
+        checkbox.parentElement.dataset.errorVisible = "true";
+        return false;
+}
+
+/** ------------------------------------------------------------
  * Validate form function
  * @param {Object} e 
  * @returns true or false
@@ -174,6 +189,7 @@ function locationValidation(cityForm) {
         birthdateValidation(birthdate),
         quantityValidation(quantity),
         locationValidation(cityForm),
+        checkboxValidation(checkbox1)
     ];
 
     //-- If every data are correct
@@ -186,6 +202,8 @@ function locationValidation(cityForm) {
             birthdate: birthdate.value,
             quantity: parseInt(quantity.value),
             location: cityChecked,
+            approved: checkboxValidation(checkbox1),
+            newsletter: checkboxValidation(checkbox2)
         };
 
         console.log("%c----- [Object to send] -----", "color: #65b44b");
