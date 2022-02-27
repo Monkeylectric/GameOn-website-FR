@@ -68,6 +68,29 @@ function lastnameValidation(lastname) {
 }
 
 /** ------------------------------------------------------------
+ * Email validation function
+ * @param {Element} email 
+ * @returns true or false
+ */
+function mailValidation(email) {
+    const emailForm = email.parentElement;
+    const mailRegex = /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$/;
+
+    if (!mailRegex.test(email.value) || email.value === "") {
+        if (email.value === "") {
+            emailForm.dataset.error = "Veuillez remplir le champ";
+        }else if (!mailRegex.test(email.value)) {
+            emailForm.dataset.error = "Veuillez renseigner une adresse mail valide";
+        }
+        emailForm.dataset.errorVisible = "true";
+        return false;
+    }else {
+        emailForm.dataset.errorVisible = "false";
+        return true;
+    }
+}
+
+/** ------------------------------------------------------------
  * Validate form function
  * @param {Object} e 
  * @returns true or false
@@ -79,6 +102,7 @@ function lastnameValidation(lastname) {
     let verification = [
         firstnameValidation(firstname),
         lastnameValidation(lastname),
+        mailValidation(email),
     ];
 
     //-- If every data are correct
